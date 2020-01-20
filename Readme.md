@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм» [![Build status][travis-image]][travis-url]
 
-* Студент: [Михаил] (https://up.htmlacademy.ru/javascript/19/user/952335).
-* Наставник: [Александр Бабченко] (https://htmlacademy.ru/profile/babtshe).
+* Студент: [Михаил](https://up.htmlacademy.ru/javascript/19/user/952335).
+* Наставник: [Александр Бабченко](https://htmlacademy.ru/profile/babtshe).
 
 ---
 
