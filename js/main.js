@@ -1,9 +1,7 @@
 'use strict';
 
 var PICTURES_COUNT = 25;
-var PICTURE_PATH = ['photos/', '.jpg'];
 var AVATAR_IMAGE_COUNT = 6;
-var AVATAR_PATH = ['img/avatar-', '.svg'];
 var LIKES_MIN = 15;
 var LIKES_MAX = 200;
 var COMMENTS_MIN = 1;
@@ -19,15 +17,14 @@ var MESSAGES = [
 ];
 var picturesInlineList = document.querySelector('.pictures');
 var pictureItem = document.querySelector('#picture').content.querySelector('.picture');
-var fragment = document.createDocumentFragment();
 
 var calcRandom = function getRandomIntInclusive(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 };
 
 var sortRandom = function shuffle(arr) {
-  var j = 0;
-  var temp = 0;
+  var j;
+  var temp;
 
   for (var i = arr.length - 1; i > 0; i--) {
     j = Math.floor(Math.random() * (i + 1));
@@ -48,12 +45,12 @@ var getPictures = function (path, imageType, count) {
   return picturesList;
 };
 
-var renderComments = function (count) {
+var getComments = function (count) {
   var comments = [];
   for (var i = 0; i < count; i++) {
     var commentsObject = {};
 
-    commentsObject.avatar = getPictures(AVATAR_PATH[0], AVATAR_PATH[1], AVATAR_IMAGE_COUNT)[calcRandom(1, AVATAR_IMAGE_COUNT)];
+    commentsObject.avatar = getPictures('img/avatar-', '.svg', AVATAR_IMAGE_COUNT)[calcRandom(1, AVATAR_IMAGE_COUNT)];
     commentsObject.message = MESSAGES[calcRandom(0, MESSAGES.length)];
     commentsObject.name = NAMES[calcRandom(0, NAMES.length)];
 
@@ -62,17 +59,18 @@ var renderComments = function (count) {
   return comments;
 };
 
+var photosList = sortRandom(getPictures('photos/', '.jpg', PICTURES_COUNT));
+
 var renderCards = function () {
   var cards = [];
-  var photos = sortRandom(getPictures(PICTURE_PATH[0], PICTURE_PATH[1], PICTURES_COUNT));
 
   for (var i = 0; i < PICTURES_COUNT; i++) {
     var picture = {};
 
-    picture.url = photos[i];
+    picture.url = photosList[i];
     picture.description = NaN;
     picture.likes = calcRandom(LIKES_MIN, LIKES_MAX);
-    picture.comments = renderComments(calcRandom(COMMENTS_MIN, COMMENTS_MAX));
+    picture.comments = getComments(calcRandom(COMMENTS_MIN, COMMENTS_MAX));
 
     cards.push(picture);
   }
@@ -91,8 +89,14 @@ var renderElement = function (index) {
   return Element;
 };
 
-for (var i = 0; i < PICTURES_COUNT; i++) {
-  fragment.appendChild(renderElement(i));
-}
+var renderPictures = function () {
+  var fragment = document.createDocumentFragment();
 
-picturesInlineList.appendChild(fragment);
+  for (var i = 0; i < PICTURES_COUNT; i++) {
+    fragment.appendChild(renderElement(i));
+  }
+
+  return fragment;
+};
+
+picturesInlineList.appendChild(renderPictures());
