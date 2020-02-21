@@ -35,7 +35,7 @@ var sortRandom = function shuffle(arr) {
   return arr;
 };
 
-var getPictures = function (path, imageType, count) {
+var getImages = function (path, imageType, count) {
   var picturesList = [];
   for (var index = 1; index <= count; index++) {
     var picture = path + [index] + imageType;
@@ -50,7 +50,7 @@ var getComments = function (count) {
   for (var i = 0; i < count; i++) {
     var commentsObject = {};
 
-    commentsObject.avatar = getPictures('img/avatar-', '.svg', AVATAR_IMAGE_COUNT)[calcRandom(1, AVATAR_IMAGE_COUNT)];
+    commentsObject.avatar = getImages('img/avatar-', '.svg', AVATAR_IMAGE_COUNT)[calcRandom(1, AVATAR_IMAGE_COUNT)];
     commentsObject.message = MESSAGES[calcRandom(0, MESSAGES.length)];
     commentsObject.name = NAMES[calcRandom(0, NAMES.length)];
 
