@@ -89,7 +89,7 @@ var renderElement = function (index) {
   return Element;
 };
 
-var renderPictures = function () {
+var getPictures = function () {
   var fragment = document.createDocumentFragment();
 
   for (var i = 0; i < PICTURES_COUNT; i++) {
@@ -99,4 +99,4 @@ var renderPictures = function () {
   return fragment;
 };
 
-picturesInlineList.appendChild(renderPictures());
+picturesInlineList.appendChild(getPictures());
