@@ -20,7 +20,7 @@ var picturesInlineList = document.querySelector('.pictures');
 var pictureItem = document.querySelector('#picture').content.querySelector('.picture');
 var bigPicture = document.querySelector('.big-picture');
 var bigCommentsListElement = bigPicture.querySelector('.social__comments');
-var bigComments =  bigPicture.querySelectorAll('.social__comment');
+var bigComments = bigPicture.querySelectorAll('.social__comment');
 
 var calcRandom = function getRandomIntInclusive(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
@@ -119,11 +119,11 @@ var renerdBigPicture = function (index) {
     bigComments[i].querySelector('.social__picture').src = Element[i].avatar;
     bigComments[i].querySelector('.social__picture').alt = Element[i].name;
     bigComments[i].querySelector('.social__text').textContent = Element[i].message;
-  };
+  }
 };
 
 var renderBigComment = function () {
-  var bigComment =  bigPicture.querySelector('.social__comment');
+  var bigComment = bigPicture.querySelector('.social__comment');
   var comentElement = bigComment.cloneNode(true);
 
   return comentElement;
