@@ -1,5 +1,6 @@
 'use strict';
 
+var POPUP_BIG_PICTURE = 0;
 var PICTURES_COUNT = 25;
 var AVATAR_IMAGE_COUNT = 6;
 var LIKES_MIN = 15;
@@ -17,6 +18,9 @@ var MESSAGES = [
 ];
 var picturesInlineList = document.querySelector('.pictures');
 var pictureItem = document.querySelector('#picture').content.querySelector('.picture');
+var bigPicture = document.querySelector('.big-picture');
+var bigCommentsListElement = bigPicture.querySelector('.social__comments');
+var bigComments =  bigPicture.querySelectorAll('.social__comment');
 
 var calcRandom = function getRandomIntInclusive(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
@@ -59,7 +63,7 @@ var getComments = function (count) {
   return comments;
 };
 
-var photosList = sortRandom(getPictures('photos/', '.jpg', PICTURES_COUNT));
+var photosList = sortRandom(getImages('photos/', '.jpg', PICTURES_COUNT));
 
 var renderCards = function () {
   var cards = [];
@@ -100,3 +104,49 @@ var getPictures = function () {
 };
 
 picturesInlineList.appendChild(getPictures());
+
+bigPicture.classList.remove('hidden');
+
+var renerdBigPicture = function (index) {
+  bigPicture.querySelector('.big-picture__img').querySelector('img').src = cardsList[index].url;
+  bigPicture.querySelector('.likes-count').textContent = cardsList[index].likes;
+  bigPicture.querySelector('.comments-count').textContent = String(cardsList[index].comments.length);
+  bigPicture.querySelector('.social__caption').textContent = String(cardsList[index].description);
+  var Element = cardsList[index].comments;
+
+  for (var i = 0; i < Element.length; i++) {
+
+    bigComments[i].querySelector('.social__picture').src = Element[i].avatar;
+    bigComments[i].querySelector('.social__picture').alt = Element[i].name;
+    bigComments[i].querySelector('.social__text').textContent = Element[i].message;
+  };
+};
+
+var renderBigComment = function () {
+  var bigComment =  bigPicture.querySelector('.social__comment');
+  var comentElement = bigComment.cloneNode(true);
+
+  return comentElement;
+};
+
+var renderBigComments = function (index) {
+  var fragmentBigPicture = document.createDocumentFragment();
+
+  if (cardsList[0].comments.length < 2) {
+    bigComments[1].remove('li');
+  }
+
+  for (var j = 2; j < cardsList[index].comments.length; j++) {
+    fragmentBigPicture.appendChild(renderBigComment());
+  }
+
+  return fragmentBigPicture;
+};
+
+bigCommentsListElement.appendChild(renderBigComments(0));
+
+renerdBigPicture(POPUP_BIG_PICTURE);
+
+bigPicture.querySelector('.social__comment-count').classList.add('hidden');
+bigPicture.querySelector('.comments-loader').classList.add('hidden');
+document.querySelector('body').classList.add('modal-open');
