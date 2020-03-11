@@ -124,8 +124,6 @@ var getPictures = function () {
 
 picturesInlineList.appendChild(getPictures());
 
-// bigPicture.classList.remove('hidden');
-
 bigPicture.querySelector('.big-picture__img').querySelector('img').src = cardsList[POPUP_BIG_PICTURE_NUMBER].url;
 bigPicture.querySelector('.likes-count').textContent = cardsList[POPUP_BIG_PICTURE_NUMBER].likes;
 bigPicture.querySelector('.comments-count').textContent = cardsList[POPUP_BIG_PICTURE_NUMBER].comments.length;
@@ -147,7 +145,6 @@ var getBigComments = function (index) {
 
   for (var j = INLINE_COMMENTS_COUNT; j < cardsList[index].comments.length; j++) {
     fragmentBigPicture.appendChild(getBigComment());
-
   }
 
   return fragmentBigPicture;
