@@ -2,17 +2,16 @@
 
 (function () {
   var EFFECT_CLASS_NUMBER = 1;
-  var DEFAULT_EFFECT_PIN_POSITION = 20;
   var HASHTAG_MAX_COUNT = 5;
   var HASHTAG_MAX_LENGTH = 20;
   var imageUploadFormElement = document.querySelector('.img-upload__form');
   var effects = imageUploadFormElement.querySelectorAll('.effects__item');
   var imgUploadPreview = imageUploadFormElement.querySelector('.img-upload__preview');
   var effectLevelLine = imageUploadFormElement.querySelector('.effect-level__line');
-  var effectLevelLineWidth = effectLevelLine.getBoundingClientRect().width;
-  var effectLevelLinePageX = effectLevelLine.getBoundingClientRect().left;
   var textHashtagsElement = document.querySelector('.text__hashtags');
-  var pinPosition = effectLevelLinePageX;
+  var effectLevelPin = effectLevelLine.querySelector('.effect-level__pin');
+  var effectLevelDepth = effectLevelLine.querySelector('.effect-level__depth');
+  var imgUploadPreviewContainer = imageUploadFormElement.querySelector('.img-upload__preview-container');
 
   var getEffectsClass = function () {
     var effectsClassList = [];
@@ -43,14 +42,86 @@
 
   onClickEffectChange();
 
-  var getEffectLevelPinPosition = function (position) {
-    position = Math.round((pinPosition - effectLevelLinePageX) / (effectLevelLineWidth / 100));
-    return position;
+  var pinDefaultPosition = function () {
+    effectLevelPin.style.left = '';
+    effectLevelDepth.style.width = '';
   };
 
-  var onMouseupEffectLevelPinPosition = function (evt) {
-    pinPosition = evt.clientX;
-    getEffectLevelPinPosition(DEFAULT_EFFECT_PIN_POSITION);
+  var onDialogHandlerMousedownDrag = function (evt) {
+    evt.preventDefault();
+
+    var startCoords = {
+      x: evt.clientX
+    };
+
+    var onMouseMove = function (moveEvt) {
+      moveEvt.preventDefault();
+
+      var shift = {
+        x: startCoords.x - moveEvt.clientX
+      };
+
+      startCoords = {
+        x: moveEvt.clientX
+      };
+
+
+      var getCorrentEffect = function (index) {
+        if (imgUploadPreviewContainer.querySelector('.effects__preview--chrome')) {
+          return 'grayscale(' + index + ')';
+        }
+        if (imgUploadPreviewContainer.querySelector('.effects__preview--sepia')) {
+          return 'sepia(' + index + ')';
+        }
+        if (imgUploadPreviewContainer.querySelector('.effects__preview--marvin')) {
+          return 'invert(' + (index * 100) + '%)';
+        }
+        if (imgUploadPreviewContainer.querySelector('.effects__preview--phobos')) {
+          return 'blur(' + (index * 3) + 'px)';
+        }
+        if (imgUploadPreviewContainer.querySelector('.effects__preview--heat')) {
+          return 'brightness(' + (index * 3) + ')';
+        }
+        return 'unset';
+      };
+
+      var pinElementPosition = (effectLevelPin.offsetLeft - shift.x);
+      var lineElementWidth = effectLevelLine.getBoundingClientRect().width;
+
+      var getPinMinMaxPosition = function (obj) {
+        if (obj >= lineElementWidth) {
+          obj = lineElementWidth;
+          return obj;
+        }
+        if (obj <= 0) {
+          obj = 0;
+          return obj;
+        }
+        return obj;
+      };
+
+      var renderEffectOnPhoto = function () {
+        var PinPercentPosition = Math.floor(getPinMinMaxPosition(pinElementPosition) / (lineElementWidth / 100)) / 100;
+        imgUploadPreview.style.filter = getCorrentEffect(PinPercentPosition);
+      };
+
+      renderEffectOnPhoto();
+
+
+      effectLevelPin.style.left = getPinMinMaxPosition(pinElementPosition) + 'px';
+      effectLevelDepth.style.width = getPinMinMaxPosition(pinElementPosition) + 'px';
+
+    };
+
+    var onMouseUp = function (upEvt) {
+      upEvt.preventDefault();
+
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
+    };
+
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
   };
 
   var onImageUploadFormSubmit = function (evt) {
@@ -122,8 +193,9 @@
   };
 
   window.uploadPctureForm = {
-    onMouseupEffectLevelPinPosition: onMouseupEffectLevelPinPosition,
-    onImageUploadFormSubmit: onImageUploadFormSubmit
+    onDialogHandlerMousedownDrag: onDialogHandlerMousedownDrag,
+    onImageUploadFormSubmit: onImageUploadFormSubmit,
+    pinDefaultPosition: pinDefaultPosition
   };
 })();
 
