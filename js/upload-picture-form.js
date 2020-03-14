@@ -2,17 +2,18 @@
 
 (function () {
   var EFFECT_CLASS_NUMBER = 1;
-  var DEFAULT_EFFECT_PIN_POSITION = 20;
   var HASHTAG_MAX_COUNT = 5;
   var HASHTAG_MAX_LENGTH = 20;
   var imageUploadFormElement = document.querySelector('.img-upload__form');
   var effects = imageUploadFormElement.querySelectorAll('.effects__item');
+  var imageUploadOverlay = imageUploadFormElement.querySelector('.img-upload__overlay');
   var imgUploadPreview = imageUploadFormElement.querySelector('.img-upload__preview');
   var effectLevelLine = imageUploadFormElement.querySelector('.effect-level__line');
-  var effectLevelLineWidth = effectLevelLine.getBoundingClientRect().width;
-  var effectLevelLinePageX = effectLevelLine.getBoundingClientRect().left;
   var textHashtagsElement = document.querySelector('.text__hashtags');
-  var pinPosition = effectLevelLinePageX;
+  var effectLevelPin = effectLevelLine.querySelector('.effect-level__pin');
+  var effectLevelDepth = effectLevelLine.querySelector('.effect-level__depth');
+  var effectLevelContainer = imageUploadOverlay.querySelector('.img-upload__effect-level');
+
 
   var getEffectsClass = function () {
     var effectsClassList = [];
@@ -22,8 +23,15 @@
     return effectsClassList;
   };
 
+  var pinDefaultPosition = function () {
+    effectLevelPin.style.left = '';
+    effectLevelDepth.style.width = '';
+    imgUploadPreview.style.filter = '';
+  };
+
   var removeEffectClass = function () {
     for (var i = 0; i < getEffectsClass().length; i++) {
+      pinDefaultPosition();
       imgUploadPreview.classList.remove(getEffectsClass()[i]);
     }
   };
@@ -32,6 +40,11 @@
     effect.addEventListener('click', function () {
       removeEffectClass();
       imgUploadPreview.classList.add(effectClass);
+      if (effectClass === 'effects__preview--none') {
+        effectLevelContainer.classList.add('hidden');
+      } else {
+        effectLevelContainer.classList.remove('hidden');
+      }
     });
   };
 
@@ -42,17 +55,6 @@
   };
 
   onClickEffectChange();
-
-  var getEffectLevelPinPosition = function (position) {
-    position = Math.round((pinPosition - effectLevelLinePageX) / (effectLevelLineWidth / 100));
-    return position;
-  };
-
-  var onMouseupEffectLevelPinPosition = function (evt) {
-    pinPosition = evt.clientX;
-    getEffectLevelPinPosition(DEFAULT_EFFECT_PIN_POSITION);
-  };
-
   var onImageUploadFormSubmit = function (evt) {
     if (!validateHashtags()) {
       evt.preventDefault();
@@ -121,9 +123,10 @@
     return true;
   };
 
+
   window.uploadPctureForm = {
-    onMouseupEffectLevelPinPosition: onMouseupEffectLevelPinPosition,
-    onImageUploadFormSubmit: onImageUploadFormSubmit
+    onImageUploadFormSubmit: onImageUploadFormSubmit,
+    pinDefaultPosition: pinDefaultPosition
   };
 })();
 
