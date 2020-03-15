@@ -9,7 +9,6 @@
   var imgUploadPreview = imageUploadFormElement.querySelector('.img-upload__preview');
   var effectLevelContainer = imageUploadOverlay.querySelector('.img-upload__effect-level');
 
-
   var onPopupEscPress = function (evt) {
     window.util.getEscEvent(evt, onCloseUploadOverlayPopup);
   };
