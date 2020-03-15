@@ -123,7 +123,6 @@
     return true;
   };
 
-
   window.uploadPctureForm = {
     onImageUploadFormSubmit: onImageUploadFormSubmit,
     pinDefaultPosition: pinDefaultPosition

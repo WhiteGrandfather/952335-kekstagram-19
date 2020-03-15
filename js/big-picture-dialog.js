@@ -12,10 +12,11 @@
 
   var onBigPicturePopup = function (evt) {
     if (evt.target.matches('a') || evt.target.matches('img')) {
-      window.bigPicture(evt.target.classList[POPUP_BIG_PICTURE_CLASS_NUMBER]);
+      window.bigPicture.renerBigPicture(evt.target.classList[POPUP_BIG_PICTURE_CLASS_NUMBER]);
       onOpenBigPictureOverlayPopup();
     }
   };
+
 
   var onOpenBigPictureOverlayPopup = function () {
     bigPictureElement.classList.remove('hidden');
@@ -29,6 +30,7 @@
     picturesInlineListElement.addEventListener('click', onBigPicturePopup);
     document.removeEventListener('keydown', onBigPicturePopupEscPress);
     bigPictureCloseButton.removeEventListener('click', onCloseBigPictureOverlayPopup);
+
   };
 
   picturesInlineListElement.addEventListener('click', onBigPicturePopup);
