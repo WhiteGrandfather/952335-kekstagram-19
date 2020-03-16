@@ -18,9 +18,9 @@
   };
 
   var onFormSend = function (evt) {
-    window.backend.upload(new FormData(imageUploadFormElement), function () {
+    window.backend.upload(function () {
       onCloseUploadOverlayPopup();
-    }, window.popupMessage.rendreErrorMessage);
+    }, window.popupMessage.rendreErrorMessage, new FormData(imageUploadFormElement));
     evt.preventDefault();
     window.popupMessage.rendreSuccessMessage(evt);
   };
