@@ -19,20 +19,16 @@
   var getMinPictures = function (pictures) {
     var fragment = document.createDocumentFragment();
 
-    for (var i = 0; i < pictures.length; i++) {
-      fragment.appendChild(renderElement(pictures[i], i));
-    }
+    pictures.forEach(function (item, i) {
+      fragment.appendChild(renderElement(item, i));
+    });
+
     picturesInlineListElement.appendChild(fragment);
   };
 
-
   var renderError = function (errorMessage) {
     var node = document.createElement('div');
-    node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: red;';
-    node.style.position = 'absolute';
-    node.style.left = 0;
-    node.style.right = 0;
-    node.style.fontSize = '30px';
+    node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: red; position: absolute; left: 0; right: 0; fontSize: 30px';
 
     node.textContent = errorMessage;
     document.body.insertAdjacentElement('afterbegin', node);

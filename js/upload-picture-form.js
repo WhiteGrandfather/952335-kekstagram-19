@@ -13,7 +13,13 @@
   var effectLevelPin = effectLevelLine.querySelector('.effect-level__pin');
   var effectLevelDepth = effectLevelLine.querySelector('.effect-level__depth');
   var effectLevelContainer = imageUploadOverlay.querySelector('.img-upload__effect-level');
+  var successMessage = document.querySelector('#success').content.querySelector('.success');
+  var main = document.querySelector('main');
 
+  var rendreSuccessMessage = function () {
+    var element = successMessage.cloneNode(true);
+    main.appendChild(element);
+  };
 
   var getEffectsClass = function () {
     var effectsClassList = [];
@@ -123,9 +129,11 @@
     return true;
   };
 
+
   window.uploadPctureForm = {
     onImageUploadFormSubmit: onImageUploadFormSubmit,
-    pinDefaultPosition: pinDefaultPosition
+    pinDefaultPosition: pinDefaultPosition,
+    rendreSuccessMessage: rendreSuccessMessage
   };
 })();
 

@@ -30,7 +30,6 @@
     picturesInlineListElement.addEventListener('click', onBigPicturePopup);
     document.removeEventListener('keydown', onBigPicturePopupEscPress);
     bigPictureCloseButton.removeEventListener('click', onCloseBigPictureOverlayPopup);
-
   };
 
   picturesInlineListElement.addEventListener('click', onBigPicturePopup);

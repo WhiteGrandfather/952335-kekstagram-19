@@ -9,12 +9,20 @@
   var imgUploadPreview = imageUploadFormElement.querySelector('.img-upload__preview');
   var effectLevelContainer = imageUploadOverlay.querySelector('.img-upload__effect-level');
 
-  var onPopupEscPress = function (evt) {
+  var onPopupEscPress = function (evt, onCloseUploadOverlayPopup) {
     window.util.getEscEvent(evt, onCloseUploadOverlayPopup);
   };
 
   var onStopPropagation = function (evt) {
     evt.stopPropagation();
+  };
+
+  var onFormSend = function (evt) {
+    window.backend.upload(function () {
+      onCloseUploadOverlayPopup();
+    }, window.popupMessage.rendreErrorMessage, new FormData(imageUploadFormElement));
+    evt.preventDefault();
+    window.popupMessage.rendreSuccessMessage(evt);
   };
 
   var onOpenUploadOverlayPopup = function () {
@@ -26,6 +34,7 @@
     imageUploadFormElement.addEventListener('submit', window.uploadPctureForm.onImageUploadFormSubmit);
     imageUploadFormElement.addEventListener('keydown', onStopPropagation);
     imgUploadPreview.addEventListener('click', onStopPropagation);
+    imageUploadFormElement.addEventListener('submit', onFormSend);
     effectLevelContainer.classList.add('hidden');
   };
 
@@ -39,8 +48,11 @@
     imageUploadFormElement.removeEventListener('submit', window.uploadPctureForm.onImageUploadFormSubmit);
     imageUploadFormElement.removeEventListener('keydown', onStopPropagation);
     imgUploadPreview.removeEventListener('click', onStopPropagation);
+    imageUploadFormElement.removeEventListener('submit', onFormSend);
     window.uploadPctureForm.pinDefaultPosition();
   };
 
   uploadFileButton.addEventListener('change', onOpenUploadOverlayPopup);
+
+  window.uploadPictureDialog = onCloseUploadOverlayPopup;
 })();
