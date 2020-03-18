@@ -23,7 +23,7 @@
       bigComments[INLINE_COMMENT_REMOVE].remove('li');
     }
 
-    for (var j = INLINE_COMMENTS_COUNT; j < MAX_COMMENTS; j++) {
+    for (var i = INLINE_COMMENTS_COUNT; i < MAX_COMMENTS; i++) {
       fragmentBigPicture.appendChild(getBigComment());
     }
 

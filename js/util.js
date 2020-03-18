@@ -27,10 +27,21 @@
     return arr;
   };
 
+  var DEBOUNCE_INTERVAL = 300; // ms
+  var lastTimeout;
+
+  var debounce = function (cd) {
+    if (lastTimeout) {
+      window.clearTimeout(lastTimeout);
+    }
+    lastTimeout = window.setTimeout(cd, DEBOUNCE_INTERVAL);
+  };
+
   window.util = {
     calcRandom: calcRandom,
     getEscEvent: getEscEvent,
-    sortRandom: sortRandom
+    sortRandom: sortRandom,
+    debounce: debounce
   };
 }
 )();
