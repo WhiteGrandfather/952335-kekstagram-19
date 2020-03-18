@@ -1,7 +1,9 @@
 'use strict';
 
 (function () {
+  var DEBOUNCE_INTERVAL = 500;
   var ESC_KEY = 'Escape';
+  var lastTimeout;
 
   var calcRandom = function getRandomIntInclusive(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
@@ -27,14 +29,13 @@
     return arr;
   };
 
-  var DEBOUNCE_INTERVAL = 300; // ms
-  var lastTimeout;
-
-  var debounce = function (cd) {
+  var debounce = function (evt, renderElement) {
     if (lastTimeout) {
       window.clearTimeout(lastTimeout);
     }
-    lastTimeout = window.setTimeout(cd, DEBOUNCE_INTERVAL);
+    lastTimeout = window.setTimeout(function () {
+      renderElement(evt);
+    }, DEBOUNCE_INTERVAL);
   };
 
   window.util = {
