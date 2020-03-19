@@ -5,6 +5,8 @@
   var bigPictureElement = document.querySelector('.big-picture');
   var picturesInlineListElement = document.querySelector('.pictures');
   var bigPictureCloseButton = bigPictureElement.querySelector('.big-picture__cancel');
+  var imageFiltersElement = document.querySelector('.img-filters');
+  var imageFiltersForm = imageFiltersElement.querySelector('.img-filters__form');
 
   var onBigPicturePopupEscPress = function (evt) {
     window.util.getEscEvent(evt, onCloseBigPictureOverlayPopup);
@@ -23,6 +25,8 @@
     picturesInlineListElement.removeEventListener('click', onBigPicturePopup);
     document.addEventListener('keydown', onBigPicturePopupEscPress);
     bigPictureCloseButton.addEventListener('click', onCloseBigPictureOverlayPopup);
+    imageFiltersForm.removeEventListener('click', window.minPictures.onFilterActive);
+    imageFiltersForm.removeEventListener('click', window.minPictures.onFilterChange);
   };
 
   var onCloseBigPictureOverlayPopup = function () {
@@ -30,6 +34,8 @@
     picturesInlineListElement.addEventListener('click', onBigPicturePopup);
     document.removeEventListener('keydown', onBigPicturePopupEscPress);
     bigPictureCloseButton.removeEventListener('click', onCloseBigPictureOverlayPopup);
+    imageFiltersForm.addEventListener('click', window.minPictures.onFilterActive);
+    imageFiltersForm.addEventListener('click', window.minPictures.onFilterChange);
   };
 
   picturesInlineListElement.addEventListener('click', onBigPicturePopup);

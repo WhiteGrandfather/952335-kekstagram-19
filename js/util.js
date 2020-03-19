@@ -5,10 +5,16 @@
   var ESC_KEY = 'Escape';
   var lastTimeout;
 
+  var getMinMaxValue = function (value, maxValue, minValue) {
+    if (value >= maxValue) {
+      return maxValue;
+    }
+    return (value <= minValue) ? minValue : value;
+  };
+
   var calcRandom = function getRandomIntInclusive(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
   };
-
 
   var getEscEvent = function (escEvt, action) {
     if (escEvt.key === ESC_KEY) {
@@ -29,16 +35,17 @@
     return arr;
   };
 
-  var debounce = function (evt, renderElement) {
+  var debounce = function (callback) {
     if (lastTimeout) {
       window.clearTimeout(lastTimeout);
     }
     lastTimeout = window.setTimeout(function () {
-      renderElement(evt);
+      callback();
     }, DEBOUNCE_INTERVAL);
   };
 
   window.util = {
+    getMinMaxValue: getMinMaxValue,
     calcRandom: calcRandom,
     getEscEvent: getEscEvent,
     sortRandom: sortRandom,

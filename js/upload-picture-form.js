@@ -1,6 +1,9 @@
 'use strict';
 
 (function () {
+  var MIN_SCALE = 25;
+  var MAX_SCALE = 100;
+  var SCALE_STEP = 25;
   var EFFECT_CLASS_NUMBER = 1;
   var HASHTAG_MAX_COUNT = 5;
   var HASHTAG_MAX_LENGTH = 20;
@@ -15,6 +18,11 @@
   var effectLevelContainer = imageUploadOverlay.querySelector('.img-upload__effect-level');
   var successMessage = document.querySelector('#success').content.querySelector('.success');
   var main = document.querySelector('main');
+  var uploadScaleElement = document.querySelector('.img-upload__scale');
+  var scaleControlMin = uploadScaleElement.querySelector('.scale__control--smaller');
+  var scaleControlValue = uploadScaleElement.querySelector('.scale__control--value');
+  var scaleControlMax = uploadScaleElement.querySelector('.scale__control--bigger');
+  var PreviewImage = imgUploadPreview.querySelector('img');
 
   var rendreSuccessMessage = function () {
     var element = successMessage.cloneNode(true);
@@ -61,6 +69,7 @@
   };
 
   onClickEffectChange();
+
   var onImageUploadFormSubmit = function (evt) {
     if (!validateHashtags()) {
       evt.preventDefault();
@@ -129,11 +138,26 @@
     return true;
   };
 
+  var onUploadScale = function (evt) {
+    var correntControlValue = Number.parseInt(scaleControlValue.value, 10);
+
+    switch (evt.target) {
+      case scaleControlMin:
+        scaleControlValue.value = window.util.getMinMaxValue(correntControlValue - SCALE_STEP, MAX_SCALE, MIN_SCALE) + '%';
+        PreviewImage.style.transform = 'scale(' + (Number.parseInt(scaleControlValue.value, 10) / 100) + ')';
+        break;
+      case scaleControlMax:
+        scaleControlValue.value = window.util.getMinMaxValue(correntControlValue + SCALE_STEP, MAX_SCALE, MIN_SCALE) + '%';
+        PreviewImage.style.transform = 'scale(' + (Number.parseInt(scaleControlValue.value, 10) / 100) + ')';
+        break;
+    }
+  };
 
   window.uploadPctureForm = {
     onImageUploadFormSubmit: onImageUploadFormSubmit,
     pinDefaultPosition: pinDefaultPosition,
-    rendreSuccessMessage: rendreSuccessMessage
+    rendreSuccessMessage: rendreSuccessMessage,
+    onUploadScale: onUploadScale
   };
 })();
 

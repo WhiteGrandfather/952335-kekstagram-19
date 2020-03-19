@@ -53,44 +53,45 @@
     return first.likes - second.likes;
   };
 
-  var onFilterChange = function (evt) {
+  var getFilterChange = function () {
     var pictureListOriginal = pictureList.slice();
     var pictureListCopy = pictureList.slice();
+    var activeFilterElement = document.querySelector('button.img-filters__button--active');
 
-    /*
-    switch (evt.target) {
-      case '#filter-default':
+    switch (activeFilterElement.id) {
+      case 'filter-default':
         rerenderPictures(pictureListOriginal);
         break;
-      case '#filter-random':
+      case 'filter-random':
         rerenderPictures(window.util.sortRandom(pictureListCopy));
         break;
-      case '#filter-discussed':
-        rerenderPictures(pictureListCopy.sort(getSortBYLikes));
+      case 'filter-discussed':
+        rerenderPictures(pictureListCopy.sort(getSortByLikes));
         break;
       default:
-        console.log('Неизвестное значение');
-    }
-    */
-
-    if (evt.target.matches('#filter-default')) {
-      rerenderPictures(pictureListOriginal);
-    }
-    if (evt.target.matches('#filter-random')) {
-      rerenderPictures(window.util.sortRandom(pictureListCopy));
-    }
-    if (evt.target.matches('#filter-discussed')) {
-      rerenderPictures(pictureListCopy.sort(getSortByLikes));
+        throw new Error('неожиданный ID кнопки фильтра "' + activeFilterElement.id + '"');
     }
   };
 
-  var getDebounce = function (evt) {
-    window.util.debounce(evt, onFilterChange);
+  var onFilterChange = function () {
+    window.util.debounce(getFilterChange);
   };
 
-  imageFiltersForm.addEventListener('click', getDebounce);
+  var onFilterActive = function (evt) {
+    var activeFilterElement = document.querySelector('button.img-filters__button--active');
+    activeFilterElement.classList.remove('img-filters__button--active');
+    evt.target.classList.add('img-filters__button--active');
+  };
+
+  imageFiltersForm.addEventListener('click', onFilterActive);
+  imageFiltersForm.addEventListener('click', onFilterChange);
 
   window.backend.load(getMinPictures, window.backend.renderError);
 
   imageFiltersElement.classList.remove(IMAGE_FILTER_HIDDEN_CLASS);
+
+  window.minPictures = {
+    onFilterActive: onFilterActive,
+    onFilterChange: onFilterChange
+  };
 })();

@@ -51,7 +51,6 @@
   };
 
   bigPictureElement.querySelector('.social__comment-count').classList.add('hidden');
-  bigPictureElement.querySelector('.comments-loader').classList.add('hidden');
   bodyElement.classList.add('modal-open');
 
   window.bigPicture = {
