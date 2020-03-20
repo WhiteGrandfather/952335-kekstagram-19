@@ -7,6 +7,7 @@
   var bigPictureCloseButton = bigPictureElement.querySelector('.big-picture__cancel');
   var imageFiltersElement = document.querySelector('.img-filters');
   var imageFiltersForm = imageFiltersElement.querySelector('.img-filters__form');
+  var commentsLoader = bigPictureElement.querySelector('.comments-loader');
 
   var onBigPicturePopupEscPress = function (evt) {
     window.util.getEscEvent(evt, onCloseBigPictureOverlayPopup);
@@ -18,7 +19,6 @@
       onOpenBigPictureOverlayPopup();
     }
   };
-
 
   var onOpenBigPictureOverlayPopup = function () {
     bigPictureElement.classList.remove('hidden');
@@ -36,6 +36,7 @@
     bigPictureCloseButton.removeEventListener('click', onCloseBigPictureOverlayPopup);
     imageFiltersForm.addEventListener('click', window.minPictures.onFilterActive);
     imageFiltersForm.addEventListener('click', window.minPictures.onFilterChange);
+    commentsLoader.removeEventListener('cilck', window.bigPicture.onCommentsLoader);
   };
 
   picturesInlineListElement.addEventListener('click', onBigPicturePopup);

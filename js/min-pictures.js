@@ -7,6 +7,7 @@
   var imageFiltersElement = document.querySelector('.img-filters');
   var imageFiltersForm = imageFiltersElement.querySelector('.img-filters__form');
   var pictureList = [];
+  var pictureListCopy = [];
 
   var renderElement = function (index, indexCount) {
     var element = pictureItemElement.cloneNode(true);
@@ -32,6 +33,9 @@
 
   var getMinPictures = function (pictures) {
     pictureList = pictures;
+    pictures.forEach(function (item) {
+      pictureListCopy.push(item);
+    });
 
     renderMinPictures(pictures);
   };
@@ -55,7 +59,6 @@
 
   var getFilterChange = function () {
     var pictureListOriginal = pictureList.slice();
-    var pictureListCopy = pictureList.slice();
     var activeFilterElement = document.querySelector('button.img-filters__button--active');
 
     switch (activeFilterElement.id) {
@@ -92,6 +95,7 @@
 
   window.minPictures = {
     onFilterActive: onFilterActive,
-    onFilterChange: onFilterChange
+    onFilterChange: onFilterChange,
+    pictureListCopy: pictureListCopy
   };
 })();
