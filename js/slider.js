@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+  var MIN_PIN_POSITION = 0;
   var imageUploadFormElement = document.querySelector('.img-upload__form');
   var imgUploadPreview = imageUploadFormElement.querySelector('.img-upload__preview');
   var effectLevelLine = imageUploadFormElement.querySelector('.effect-level__line');
@@ -48,18 +49,11 @@
       var pinElementPosition = (effectLevelPin.offsetLeft - shift.x);
       var lineElementWidth = effectLevelLine.getBoundingClientRect().width;
 
-      var getPinMinMaxPosition = function (obj) {
-        if (obj >= lineElementWidth) {
-          return lineElementWidth;
-        }
-        return (obj <= 0) ? 0 : obj;
-      };
-
-      var PinPercentPosition = Math.floor(getPinMinMaxPosition(pinElementPosition) / (lineElementWidth / 100)) / 100;
+      var PinPercentPosition = Math.floor(window.util.getMinMaxValue(pinElementPosition, lineElementWidth, MIN_PIN_POSITION) / (lineElementWidth / 100)) / 100;
 
       imgUploadPreview.style.filter = getCorrentEffect(PinPercentPosition);
-      effectLevelPin.style.left = getPinMinMaxPosition(pinElementPosition) + 'px';
-      effectLevelDepth.style.width = getPinMinMaxPosition(pinElementPosition) + 'px';
+      effectLevelPin.style.left = window.util.getMinMaxValue(pinElementPosition, lineElementWidth, MIN_PIN_POSITION) + 'px';
+      effectLevelDepth.style.width = window.util.getMinMaxValue(pinElementPosition, lineElementWidth, MIN_PIN_POSITION) + 'px';
     };
 
     var onMouseUp = function (upEvt) {
