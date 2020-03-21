@@ -8,8 +8,9 @@
   var imgUploadPreviewContainer = imageUploadFormElement.querySelector('.img-upload__preview-container');
   var effectLevelPin = effectLevelLine.querySelector('.effect-level__pin');
   var effectLevelDepth = effectLevelLine.querySelector('.effect-level__depth');
+  var previewImage = imgUploadPreview.querySelector('img');
 
-  var getCorrentEffect = function (index) {
+  var getCurrentEffect = function (index) {
     if (imgUploadPreviewContainer.querySelector('.effects__preview--chrome')) {
       return 'grayscale(' + index + ')';
     }
@@ -28,7 +29,7 @@
     return 'unset';
   };
 
-  var onDialogHandlerMousedownDrag = function (evt) {
+  var onDialogMousedownDrag = function (evt) {
     evt.preventDefault();
 
     var startCoords = {
@@ -51,7 +52,7 @@
 
       var PinPercentPosition = Math.floor(window.util.getMinMaxValue(pinElementPosition, lineElementWidth, MIN_PIN_POSITION) / (lineElementWidth / 100)) / 100;
 
-      imgUploadPreview.style.filter = getCorrentEffect(PinPercentPosition);
+      previewImage.style.filter = getCurrentEffect(PinPercentPosition);
       effectLevelPin.style.left = window.util.getMinMaxValue(pinElementPosition, lineElementWidth, MIN_PIN_POSITION) + 'px';
       effectLevelDepth.style.width = window.util.getMinMaxValue(pinElementPosition, lineElementWidth, MIN_PIN_POSITION) + 'px';
     };
@@ -68,6 +69,6 @@
   };
 
   window.slider = {
-    onDialogHandlerMousedownDrag: onDialogHandlerMousedownDrag
+    onDialogMousedownDrag: onDialogMousedownDrag
   };
 })();

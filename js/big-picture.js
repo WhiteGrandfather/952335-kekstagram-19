@@ -12,9 +12,9 @@
   var commentsLoader = bigPictureElement.querySelector('.comments-loader');
 
   var getBigComment = function () {
-    var comentElement = bigComments[0].cloneNode(true);
+    var commentElement = bigComments[0].cloneNode(true);
 
-    return comentElement;
+    return commentElement;
   };
 
   var removeBigComments = function (comments) {
@@ -55,7 +55,7 @@
     }
   };
 
-  var renerBigPicture = function (index) {
+  var renderBigPicture = function (index) {
     var pictures = window.minPictures.pictureListCopy;
 
     bigPictureElement.querySelector('.big-picture__img').querySelector('img').src = pictures[index].url;
@@ -67,13 +67,12 @@
 
     var commentsElement = pictures[index].comments;
 
+    renderComments(commentsElement, commentsElement.length);
+
     if (commentsElement.length > commentsShow) {
-      renderComments(commentsElement, commentsElement.length);
       for (var i = commentsShow; i < bigComments.length; i++) {
         bigComments[i].style.display = 'none';
       }
-    } else {
-      renderComments(commentsElement, commentsElement.length);
     }
 
     commentsLoader.addEventListener('click', onCommentsLoader);
@@ -83,7 +82,7 @@
   bodyElement.classList.add('modal-open');
 
   window.bigPicture = {
-    renerBigPicture: renerBigPicture,
+    renderBigPicture: renderBigPicture,
     onCommentsLoader: onCommentsLoader
   };
 

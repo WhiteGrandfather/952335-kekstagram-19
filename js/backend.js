@@ -4,7 +4,7 @@
   var URL = 'https://js.dump.academy/kekstagram';
   var PICTURES_CONTAINER = '/data';
   var STATUS_CODE_OK = 200;
-  var RESPONCE_TYPE_JSON = 'json';
+  var RESPONSE_TYPE_JSON = 'json';
   var XHR_TIMEOUT = 10000;
   var METHOD_GET = 'GET';
   var METHOD_POST = 'post';
@@ -20,7 +20,7 @@
   var request = function (method, url, onSuccess, onError, data) {
     var xhr = new XMLHttpRequest();
 
-    xhr.responseType = RESPONCE_TYPE_JSON;
+    xhr.responseType = RESPONSE_TYPE_JSON;
 
     xhr.addEventListener('load', function () {
       if (xhr.status === STATUS_CODE_OK) {

@@ -32,7 +32,7 @@
     mainElement.querySelector('.error').remove();
   };
 
-  var rendreSuccessMessage = function () {
+  var renderSuccessMessage = function () {
     var element = successMessageElement.cloneNode(true);
 
     mainElement.appendChild(element);
@@ -43,7 +43,7 @@
     mainElement.querySelector('.success__button').addEventListener('click', onCloseSuccessMessage);
   };
 
-  var rendreErrorMessage = function () {
+  var renderErrorMessage = function () {
     var element = errorMessageElement.cloneNode(true);
 
     mainElement.appendChild(element);
@@ -59,7 +59,7 @@
   };
 
   window.popupMessage = {
-    rendreSuccessMessage: rendreSuccessMessage,
-    rendreErrorMessage: rendreErrorMessage
+    renderSuccessMessage: renderSuccessMessage,
+    renderErrorMessage: renderErrorMessage
   };
 })();

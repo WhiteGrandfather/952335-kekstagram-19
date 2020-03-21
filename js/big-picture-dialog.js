@@ -15,7 +15,7 @@
 
   var onBigPicturePopup = function (evt) {
     if (evt.target.matches('a') || evt.target.matches('img')) {
-      window.bigPicture.renerBigPicture(evt.target.classList[POPUP_BIG_PICTURE_CLASS_NUMBER]);
+      window.bigPicture.renderBigPicture(evt.target.classList[POPUP_BIG_PICTURE_CLASS_NUMBER]);
       onOpenBigPictureOverlayPopup();
     }
   };

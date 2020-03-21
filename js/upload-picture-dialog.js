@@ -11,8 +11,9 @@
   var imageFiltersElement = document.querySelector('.img-filters');
   var imageFiltersForm = imageFiltersElement.querySelector('.img-filters__form');
   var uploadScaleElement = document.querySelector('.img-upload__scale');
+  var bodyElement = document.querySelector('body');
 
-  var onPopupEscPress = function (evt, onCloseUploadOverlayPopup) {
+  var onPopupEscPress = function (evt) {
     window.util.getEscEvent(evt, onCloseUploadOverlayPopup);
   };
 
@@ -23,9 +24,9 @@
   var onFormSend = function (evt) {
     window.backend.upload(function () {
       onCloseUploadOverlayPopup();
-    }, window.popupMessage.rendreErrorMessage, new FormData(imageUploadFormElement));
+    }, window.popupMessage.renderErrorMessage, new FormData(imageUploadFormElement));
     evt.preventDefault();
-    window.popupMessage.rendreSuccessMessage(evt);
+    window.popupMessage.renderSuccessMessage(evt);
   };
 
   var onOpenUploadOverlayPopup = function () {
@@ -33,15 +34,16 @@
     uploadCancelButton.addEventListener('click', onCloseUploadOverlayPopup);
     document.addEventListener('keydown', onPopupEscPress);
     uploadFileButton.removeEventListener('change', onOpenUploadOverlayPopup);
-    effectLevelPin.addEventListener('mousedown', window.slider.onDialogHandlerMousedownDrag);
-    imageUploadFormElement.addEventListener('submit', window.uploadPctureForm.onImageUploadFormSubmit);
+    effectLevelPin.addEventListener('mousedown', window.slider.onDialogMousedownDrag);
+    imageUploadFormElement.addEventListener('submit', window.uploadPictureForm.onImageUploadFormSubmit);
     imageUploadFormElement.addEventListener('keydown', onStopPropagation);
     imgUploadPreview.addEventListener('click', onStopPropagation);
     imageUploadFormElement.addEventListener('submit', onFormSend);
     effectLevelContainer.classList.add('hidden');
     imageFiltersForm.removeEventListener('click', window.minPictures.onFilterActive);
     imageFiltersForm.removeEventListener('click', window.minPictures.onFilterChange);
-    uploadScaleElement.addEventListener('click', window.uploadPctureForm.onUploadScale);
+    uploadScaleElement.addEventListener('click', window.uploadPictureForm.onUploadScale);
+    bodyElement.classList.add('modal-open');
   };
 
   var onCloseUploadOverlayPopup = function () {
@@ -50,15 +52,17 @@
     uploadCancelButton.removeEventListener('click', onCloseUploadOverlayPopup);
     document.removeEventListener('keydown', onPopupEscPress);
     uploadFileButton.addEventListener('change', onOpenUploadOverlayPopup);
-    effectLevelPin.addEventListener('mousedown', window.slider.onDialogHandlerMousedownDrag);
-    imageUploadFormElement.removeEventListener('submit', window.uploadPctureForm.onImageUploadFormSubmit);
+    effectLevelPin.addEventListener('mousedown', window.slider.onDialogMousedownDrag);
+    imageUploadFormElement.removeEventListener('submit', window.uploadPictureForm.onImageUploadFormSubmit);
     imageUploadFormElement.removeEventListener('keydown', onStopPropagation);
     imgUploadPreview.removeEventListener('click', onStopPropagation);
     imageUploadFormElement.removeEventListener('submit', onFormSend);
-    window.uploadPctureForm.pinDefaultPosition();
+    window.uploadPictureForm.pinDefaultPosition();
+    window.uploadPictureForm.removeEffectClass();
     imageFiltersForm.addEventListener('click', window.minPictures.onFilterActive);
     imageFiltersForm.addEventListener('click', window.minPictures.onFilterChange);
-    uploadScaleElement.removeEventListener('click', window.uploadPctureForm.onUploadScale);
+    uploadScaleElement.removeEventListener('click', window.uploadPictureForm.onUploadScale);
+    bodyElement.classList.remove('modal-open');
   };
 
   uploadFileButton.addEventListener('change', onOpenUploadOverlayPopup);

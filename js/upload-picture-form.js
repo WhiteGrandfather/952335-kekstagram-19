@@ -7,6 +7,7 @@
   var EFFECT_CLASS_NUMBER = 1;
   var HASHTAG_MAX_COUNT = 5;
   var HASHTAG_MAX_LENGTH = 20;
+  var PIN_DEFAULT_POSITION = '453px';
   var imageUploadFormElement = document.querySelector('.img-upload__form');
   var effects = imageUploadFormElement.querySelectorAll('.effects__item');
   var imageUploadOverlay = imageUploadFormElement.querySelector('.img-upload__overlay');
@@ -22,9 +23,9 @@
   var scaleControlMin = uploadScaleElement.querySelector('.scale__control--smaller');
   var scaleControlValue = uploadScaleElement.querySelector('.scale__control--value');
   var scaleControlMax = uploadScaleElement.querySelector('.scale__control--bigger');
-  var PreviewImage = imgUploadPreview.querySelector('img');
+  var previewImage = imgUploadPreview.querySelector('img');
 
-  var rendreSuccessMessage = function () {
+  var renderSuccessMessage = function () {
     var element = successMessage.cloneNode(true);
     main.appendChild(element);
   };
@@ -38,22 +39,22 @@
   };
 
   var pinDefaultPosition = function () {
-    effectLevelPin.style.left = '';
-    effectLevelDepth.style.width = '';
-    imgUploadPreview.style.filter = '';
+    effectLevelPin.style.left = PIN_DEFAULT_POSITION;
+    effectLevelDepth.style.width = PIN_DEFAULT_POSITION;
+    previewImage.style.filter = '';
   };
 
   var removeEffectClass = function () {
     for (var i = 0; i < getEffectsClass().length; i++) {
       pinDefaultPosition();
-      imgUploadPreview.classList.remove(getEffectsClass()[i]);
+      previewImage.classList.remove(getEffectsClass()[i]);
     }
   };
 
   var onClickEffect = function (effect, effectClass) {
     effect.addEventListener('click', function () {
       removeEffectClass();
-      imgUploadPreview.classList.add(effectClass);
+      previewImage.classList.add(effectClass);
       if (effectClass === 'effects__preview--none') {
         effectLevelContainer.classList.add('hidden');
       } else {
@@ -139,25 +140,26 @@
   };
 
   var onUploadScale = function (evt) {
-    var correntControlValue = Number.parseInt(scaleControlValue.value, 10);
+    var currentControlValue = Number.parseInt(scaleControlValue.value, 10);
 
     switch (evt.target) {
       case scaleControlMin:
-        scaleControlValue.value = window.util.getMinMaxValue(correntControlValue - SCALE_STEP, MAX_SCALE, MIN_SCALE) + '%';
-        PreviewImage.style.transform = 'scale(' + (Number.parseInt(scaleControlValue.value, 10) / 100) + ')';
+        scaleControlValue.value = window.util.getMinMaxValue(currentControlValue - SCALE_STEP, MAX_SCALE, MIN_SCALE) + '%';
+        previewImage.style.transform = 'scale(' + (Number.parseInt(scaleControlValue.value, 10) / 100) + ')';
         break;
       case scaleControlMax:
-        scaleControlValue.value = window.util.getMinMaxValue(correntControlValue + SCALE_STEP, MAX_SCALE, MIN_SCALE) + '%';
-        PreviewImage.style.transform = 'scale(' + (Number.parseInt(scaleControlValue.value, 10) / 100) + ')';
+        scaleControlValue.value = window.util.getMinMaxValue(currentControlValue + SCALE_STEP, MAX_SCALE, MIN_SCALE) + '%';
+        previewImage.style.transform = 'scale(' + (Number.parseInt(scaleControlValue.value, 10) / 100) + ')';
         break;
     }
   };
 
-  window.uploadPctureForm = {
+  window.uploadPictureForm = {
     onImageUploadFormSubmit: onImageUploadFormSubmit,
     pinDefaultPosition: pinDefaultPosition,
-    rendreSuccessMessage: rendreSuccessMessage,
-    onUploadScale: onUploadScale
+    renderSuccessMessage: renderSuccessMessage,
+    onUploadScale: onUploadScale,
+    removeEffectClass: removeEffectClass
   };
 })();
 
