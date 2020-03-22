@@ -71,94 +71,40 @@
 
   onClickEffectChange();
 
-  var onImageUploadFormSubmit = function (evt) {
-    if (!validateHashtags()) {
-      evt.preventDefault();
-    }
-  };
-
   var validateHashtags = function () {
     var hashtags = textHashtagsElement.value.trim().toLowerCase().split(/\s+/);
 
-    // for (var i = 0; i < hashtags.length; i++) {
-    //   if (hashtags[i] === '#') {
-    //     textHashtagsElement.setCustomValidity('Хеш-тег не может состоят только из решетки.');
-    //     return false;
-    //   } else if (hashtags[i][0] !== '#') {
-    //     textHashtagsElement.setCustomValidity('Каждый хеш-тег начинается с решетки "#".');
-    //     return false;
-    //   } else if (!(/^[#][a-zа-яё0-9]+$/.test(hashtags[i]))) {
-    //     textHashtagsElement.setCustomValidity('Хеш-тег состоит из букв и цифр.');
-    //     return false;
-    //   } else if (hashtags[i].length > HASHTAG_MAX_LENGTH) {
-    //     textHashtagsElement.setCustomValidity('Хеш-тег не может быть длинее 20 символов.');
-    //     return false;
-    //   } else {
-    //     textHashtagsElement.setCustomValidity('');
-    //   }
-    //   for (var x = i + 1; x < hashtags.length; x++) {
-    //     if (hashtags.length !== 1 && hashtags[i] === hashtags[x]) {
-    //       textHashtagsElement.setCustomValidity('Не может быть повторяющихся хеш-тегов. Хэш-теги нечувствительны к регистру: #ХэшТег и #хэштег считаются одним и тем же тегом.');
-    //       return false;
-    //     } else {
-    //       textHashtagsElement.setCustomValidity('');
-    //     }
-    //   }
-    // }
-    // if (hashtags.length > HASHTAG_MAX_COUNT) {
-    //   textHashtagsElement.setCustomValidity('Максимальное количество хеш-тегов ' + HASHTAG_MAX_COUNT + '.');
-    //   return false;
-    // } else {
-    //   textHashtagsElement.setCustomValidity('');
-    // }
+    if (textHashtagsElement.value.trim().length === 0) {
+      return true;
+    }
 
-    // return true;
-
-    for (var j = 0; j < hashtags.length; j++) {
-      if (hashtags[j] === '#') {
+    for (var i = 0; i < hashtags.length; i++) {
+      if (hashtags[i] === '#') {
         textHashtagsElement.setCustomValidity('Хеш-тег не может состоят только из решетки.');
         return false;
-      } else {
-        textHashtagsElement.setCustomValidity('');
       }
-    }
 
-    for (var k = 0; k < hashtags.length; k++) {
-      if (hashtags[k][0] !== '#') {
+      if (hashtags[i][0] !== '#') {
         textHashtagsElement.setCustomValidity('Каждый хеш-тег начинается с решетки "#".');
         return false;
-      } else {
-        textHashtagsElement.setCustomValidity('');
       }
-    }
 
-    for (var m = 0; m < hashtags.length; m++) {
-      if (!(/^[#][a-zа-яё0-9]+$/.test(hashtags[m]))) {
+      if (!(/^[#][a-zа-яё0-9]+$/.test(hashtags[i]))) {
         textHashtagsElement.setCustomValidity('Хеш-тег состоит из букв и цифр.');
         return false;
-      } else {
-        textHashtagsElement.setCustomValidity('');
       }
-    }
 
-    for (var l = 0; l < hashtags.length; l++) {
-      if (hashtags[l].length > HASHTAG_MAX_LENGTH) {
+      if (hashtags[i].length > HASHTAG_MAX_LENGTH) {
         textHashtagsElement.setCustomValidity('Хеш-тег не может быть длинее 20 символов.');
         return false;
-      } else {
-        textHashtagsElement.setCustomValidity('');
       }
-    }
 
-    for (var z = 0; z < hashtags.length; z++) {
-      var currentHashtag = hashtags[z];
+      var currentHashtag = hashtags[i];
 
-      for (var x = z + 1; x < hashtags.length; x++) {
+      for (var x = i + 1; x < hashtags.length; x++) {
         if (hashtags.length !== 1 && currentHashtag === hashtags[x]) {
           textHashtagsElement.setCustomValidity('Не может быть повторяющихся хеш-тегов. Хэш-теги нечувствительны к регистру: #ХэшТег и #хэштег считаются одним и тем же тегом.');
           return false;
-        } else {
-          textHashtagsElement.setCustomValidity('');
         }
       }
     }
@@ -166,9 +112,9 @@
     if (hashtags.length > HASHTAG_MAX_COUNT) {
       textHashtagsElement.setCustomValidity('Максимальное количество хеш-тегов ' + HASHTAG_MAX_COUNT + '.');
       return false;
-    } else {
-      textHashtagsElement.setCustomValidity('');
     }
+
+    textHashtagsElement.setCustomValidity('');
 
     return true;
   };
@@ -189,10 +135,10 @@
   };
 
   window.uploadPictureForm = {
-    onImageUploadFormSubmit: onImageUploadFormSubmit,
     pinDefaultPosition: pinDefaultPosition,
     renderSuccessMessage: renderSuccessMessage,
     onUploadScale: onUploadScale,
-    removeEffectClass: removeEffectClass
+    removeEffectClass: removeEffectClass,
+    validateHashtags: validateHashtags,
   };
 })();
