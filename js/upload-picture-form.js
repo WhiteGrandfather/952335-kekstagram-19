@@ -9,63 +9,63 @@
   var HASHTAG_MAX_LENGTH = 20;
   var PIN_DEFAULT_POSITION = '453px';
   var imageUploadFormElement = document.querySelector('.img-upload__form');
-  var effects = imageUploadFormElement.querySelectorAll('.effects__item');
-  var imageUploadOverlay = imageUploadFormElement.querySelector('.img-upload__overlay');
-  var imgUploadPreview = imageUploadFormElement.querySelector('.img-upload__preview');
-  var effectLevelLine = imageUploadFormElement.querySelector('.effect-level__line');
+  var effectsElement = imageUploadFormElement.querySelectorAll('.effects__item');
+  var imageUploadOverlayElement = imageUploadFormElement.querySelector('.img-upload__overlay');
+  var imgUploadPreviewElement = imageUploadFormElement.querySelector('.img-upload__preview');
+  var effectLevelLineElement = imageUploadFormElement.querySelector('.effect-level__line');
   var textHashtagsElement = document.querySelector('.text__hashtags');
-  var effectLevelPin = effectLevelLine.querySelector('.effect-level__pin');
-  var effectLevelDepth = effectLevelLine.querySelector('.effect-level__depth');
-  var effectLevelContainer = imageUploadOverlay.querySelector('.img-upload__effect-level');
-  var successMessage = document.querySelector('#success').content.querySelector('.success');
-  var main = document.querySelector('main');
+  var effectLevelPinElement = effectLevelLineElement.querySelector('.effect-level__pin');
+  var effectLevelDepthElement = effectLevelLineElement.querySelector('.effect-level__depth');
+  var effectLevelContainerElement = imageUploadOverlayElement.querySelector('.img-upload__effect-level');
+  var successMessageElement = document.querySelector('#success').content.querySelector('.success');
+  var mainElement = document.querySelector('main');
   var uploadScaleElement = document.querySelector('.img-upload__scale');
-  var scaleControlMin = uploadScaleElement.querySelector('.scale__control--smaller');
-  var scaleControlValue = uploadScaleElement.querySelector('.scale__control--value');
-  var scaleControlMax = uploadScaleElement.querySelector('.scale__control--bigger');
-  var previewImage = imgUploadPreview.querySelector('img');
+  var scaleControlMinElement = uploadScaleElement.querySelector('.scale__control--smaller');
+  var scaleControlValueElement = uploadScaleElement.querySelector('.scale__control--value');
+  var scaleControlMaxElement = uploadScaleElement.querySelector('.scale__control--bigger');
+  var previewImageElement = imgUploadPreviewElement.querySelector('img');
 
   var renderSuccessMessage = function () {
-    var element = successMessage.cloneNode(true);
-    main.appendChild(element);
+    var element = successMessageElement.cloneNode(true);
+    mainElement.appendChild(element);
   };
 
   var getEffectsClass = function () {
     var effectsClassList = [];
-    for (var i = 0; i < effects.length; i++) {
-      effectsClassList.push(effects[i].querySelector('.effects__preview').classList[EFFECT_CLASS_NUMBER]);
+    for (var i = 0; i < effectsElement.length; i++) {
+      effectsClassList.push(effectsElement[i].querySelector('.effects__preview').classList[EFFECT_CLASS_NUMBER]);
     }
     return effectsClassList;
   };
 
   var pinDefaultPosition = function () {
-    effectLevelPin.style.left = PIN_DEFAULT_POSITION;
-    effectLevelDepth.style.width = PIN_DEFAULT_POSITION;
-    previewImage.style.filter = '';
+    effectLevelPinElement.style.left = PIN_DEFAULT_POSITION;
+    effectLevelDepthElement.style.width = PIN_DEFAULT_POSITION;
+    previewImageElement.style.filter = '';
   };
 
   var removeEffectClass = function () {
     for (var i = 0; i < getEffectsClass().length; i++) {
       pinDefaultPosition();
-      previewImage.classList.remove(getEffectsClass()[i]);
+      previewImageElement.classList.remove(getEffectsClass()[i]);
     }
   };
 
   var onClickEffect = function (effect, effectClass) {
     effect.addEventListener('click', function () {
       removeEffectClass();
-      previewImage.classList.add(effectClass);
+      previewImageElement.classList.add(effectClass);
       if (effectClass === 'effects__preview--none') {
-        effectLevelContainer.classList.add('hidden');
+        effectLevelContainerElement.classList.add('hidden');
       } else {
-        effectLevelContainer.classList.remove('hidden');
+        effectLevelContainerElement.classList.remove('hidden');
       }
     });
   };
 
   var onClickEffectChange = function () {
-    for (var i = 0; i < effects.length; i++) {
-      onClickEffect(effects[i], getEffectsClass()[i]);
+    for (var i = 0; i < effectsElement.length; i++) {
+      onClickEffect(effectsElement[i], getEffectsClass()[i]);
     }
   };
 
@@ -120,16 +120,16 @@
   };
 
   var onUploadScale = function (evt) {
-    var currentControlValue = Number.parseInt(scaleControlValue.value, 10);
+    var currentControlValue = Number.parseInt(scaleControlValueElement.value, 10);
 
     switch (evt.target) {
-      case scaleControlMin:
-        scaleControlValue.value = window.util.getMinMaxValue(currentControlValue - SCALE_STEP, MAX_SCALE, MIN_SCALE) + '%';
-        previewImage.style.transform = 'scale(' + (Number.parseInt(scaleControlValue.value, 10) / 100) + ')';
+      case scaleControlMinElement:
+        scaleControlValueElement.value = window.util.getMinMaxValue(currentControlValue - SCALE_STEP, MAX_SCALE, MIN_SCALE) + '%';
+        previewImageElement.style.transform = 'scale(' + (Number.parseInt(scaleControlValueElement.value, 10) / 100) + ')';
         break;
-      case scaleControlMax:
-        scaleControlValue.value = window.util.getMinMaxValue(currentControlValue + SCALE_STEP, MAX_SCALE, MIN_SCALE) + '%';
-        previewImage.style.transform = 'scale(' + (Number.parseInt(scaleControlValue.value, 10) / 100) + ')';
+      case scaleControlMaxElement:
+        scaleControlValueElement.value = window.util.getMinMaxValue(currentControlValue + SCALE_STEP, MAX_SCALE, MIN_SCALE) + '%';
+        previewImageElement.style.transform = 'scale(' + (Number.parseInt(scaleControlValueElement.value, 10) / 100) + ')';
         break;
     }
   };

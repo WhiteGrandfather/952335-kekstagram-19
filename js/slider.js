@@ -3,27 +3,27 @@
 (function () {
   var MIN_PIN_POSITION = 0;
   var imageUploadFormElement = document.querySelector('.img-upload__form');
-  var imgUploadPreview = imageUploadFormElement.querySelector('.img-upload__preview');
+  var imgUploadPreviewElement = imageUploadFormElement.querySelector('.img-upload__preview');
   var effectLevelLine = imageUploadFormElement.querySelector('.effect-level__line');
-  var imgUploadPreviewContainer = imageUploadFormElement.querySelector('.img-upload__preview-container');
-  var effectLevelPin = effectLevelLine.querySelector('.effect-level__pin');
-  var effectLevelDepth = effectLevelLine.querySelector('.effect-level__depth');
-  var previewImage = imgUploadPreview.querySelector('img');
+  var imgUploadPreviewElementContainer = imageUploadFormElement.querySelector('.img-upload__preview-container');
+  var effectLevelPinElement = effectLevelLine.querySelector('.effect-level__pin');
+  var effectLevelDepthElement = effectLevelLine.querySelector('.effect-level__depth');
+  var previewImageElement = imgUploadPreviewElement.querySelector('img');
 
   var getCurrentEffect = function (index) {
-    if (imgUploadPreviewContainer.querySelector('.effects__preview--chrome')) {
+    if (imgUploadPreviewElementContainer.querySelector('.effects__preview--chrome')) {
       return 'grayscale(' + index + ')';
     }
-    if (imgUploadPreviewContainer.querySelector('.effects__preview--sepia')) {
+    if (imgUploadPreviewElementContainer.querySelector('.effects__preview--sepia')) {
       return 'sepia(' + index + ')';
     }
-    if (imgUploadPreviewContainer.querySelector('.effects__preview--marvin')) {
+    if (imgUploadPreviewElementContainer.querySelector('.effects__preview--marvin')) {
       return 'invert(' + (index * 100) + '%)';
     }
-    if (imgUploadPreviewContainer.querySelector('.effects__preview--phobos')) {
+    if (imgUploadPreviewElementContainer.querySelector('.effects__preview--phobos')) {
       return 'blur(' + (index * 3) + 'px)';
     }
-    if (imgUploadPreviewContainer.querySelector('.effects__preview--heat')) {
+    if (imgUploadPreviewElementContainer.querySelector('.effects__preview--heat')) {
       return 'brightness(' + (index * 3) + ')';
     }
     return 'unset';
@@ -47,14 +47,14 @@
         x: moveEvt.clientX
       };
 
-      var pinElementPosition = (effectLevelPin.offsetLeft - shift.x);
+      var pinElementPosition = (effectLevelPinElement.offsetLeft - shift.x);
       var lineElementWidth = effectLevelLine.getBoundingClientRect().width;
 
       var PinPercentPosition = Math.floor(window.util.getMinMaxValue(pinElementPosition, lineElementWidth, MIN_PIN_POSITION) / (lineElementWidth / 100)) / 100;
 
-      previewImage.style.filter = getCurrentEffect(PinPercentPosition);
-      effectLevelPin.style.left = window.util.getMinMaxValue(pinElementPosition, lineElementWidth, MIN_PIN_POSITION) + 'px';
-      effectLevelDepth.style.width = window.util.getMinMaxValue(pinElementPosition, lineElementWidth, MIN_PIN_POSITION) + 'px';
+      previewImageElement.style.filter = getCurrentEffect(PinPercentPosition);
+      effectLevelPinElement.style.left = window.util.getMinMaxValue(pinElementPosition, lineElementWidth, MIN_PIN_POSITION) + 'px';
+      effectLevelDepthElement.style.width = window.util.getMinMaxValue(pinElementPosition, lineElementWidth, MIN_PIN_POSITION) + 'px';
     };
 
     var onMouseUp = function (upEvt) {

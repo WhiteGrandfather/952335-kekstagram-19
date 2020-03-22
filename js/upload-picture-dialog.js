@@ -2,16 +2,17 @@
 
 (function () {
   var imageUploadFormElement = document.querySelector('.img-upload__form');
-  var uploadFileButton = imageUploadFormElement.querySelector('#upload-file');
-  var uploadCancelButton = imageUploadFormElement.querySelector('#upload-cancel');
-  var imageUploadOverlay = imageUploadFormElement.querySelector('.img-upload__overlay');
-  var effectLevelPin = imageUploadFormElement.querySelector('.effect-level__pin');
-  var imgUploadPreview = imageUploadFormElement.querySelector('.img-upload__preview');
-  var effectLevelContainer = imageUploadOverlay.querySelector('.img-upload__effect-level');
+  var uploadFileButtonElement = imageUploadFormElement.querySelector('#upload-file');
+  var uploadCancelButtonElement = imageUploadFormElement.querySelector('#upload-cancel');
+  var imageUploadOverlayElement = imageUploadFormElement.querySelector('.img-upload__overlay');
+  var effectLevelPinElement = imageUploadFormElement.querySelector('.effect-level__pin');
+  var imgUploadPreviewElement = imageUploadFormElement.querySelector('.img-upload__preview');
+  var effectLevelContainerElement = imageUploadOverlayElement.querySelector('.img-upload__effect-level');
   var imageFiltersElement = document.querySelector('.img-filters');
-  var imageFiltersForm = imageFiltersElement.querySelector('.img-filters__form');
+  var imageFiltersFormElement = imageFiltersElement.querySelector('.img-filters__form');
   var uploadScaleElement = document.querySelector('.img-upload__scale');
   var bodyElement = document.querySelector('body');
+  var imageUploadButtonElement = document.querySelector('#upload-file');
 
   var onPopupEscPress = function (evt) {
     window.util.getEscEvent(evt, onCloseUploadOverlayPopup);
@@ -29,46 +30,49 @@
     }
   };
 
+  var onUploadImage = function () {
+    window.uploadImage.onUploadImage(imageUploadButtonElement);
+  };
+
   var onOpenUploadOverlayPopup = function () {
-    imageUploadOverlay.classList.remove('hidden');
-
-    uploadCancelButton.addEventListener('click', onCloseUploadOverlayPopup);
+    imageUploadOverlayElement.classList.remove('hidden');
+    uploadCancelButtonElement.addEventListener('click', onCloseUploadOverlayPopup);
     document.addEventListener('keydown', onPopupEscPress);
-    uploadFileButton.removeEventListener('change', onOpenUploadOverlayPopup);
-    effectLevelPin.addEventListener('mousedown', window.slider.onDialogMousedownDrag);
+    uploadFileButtonElement.removeEventListener('change', onOpenUploadOverlayPopup);
+    effectLevelPinElement.addEventListener('mousedown', window.slider.onDialogMousedownDrag);
     document.querySelector('.text__hashtags').addEventListener('input', window.uploadPictureForm.validateHashtags);
-    // imageUploadFormElement.addEventListener('keydown', onStopPropagation);
-    imgUploadPreview.addEventListener('click', onStopPropagation);
+    imageUploadFormElement.addEventListener('keydown', onStopPropagation);
+    imgUploadPreviewElement.addEventListener('click', onStopPropagation);
     imageUploadFormElement.addEventListener('submit', onFormSend);
-    effectLevelContainer.classList.add('hidden');
-    imageFiltersForm.removeEventListener('click', window.minPictures.onFilterActive);
-    imageFiltersForm.removeEventListener('click', window.minPictures.onFilterChange);
+    effectLevelContainerElement.classList.add('hidden');
+    imageFiltersFormElement.removeEventListener('click', window.minPictures.onFilterActive);
+    imageFiltersFormElement.removeEventListener('click', window.minPictures.onFilterChange);
     uploadScaleElement.addEventListener('click', window.uploadPictureForm.onUploadScale);
-
+    imageUploadButtonElement.removeEventListener('change', onUploadImage);
     bodyElement.classList.add('modal-open');
   };
 
   var onCloseUploadOverlayPopup = function () {
-    imageUploadOverlay.classList.add('hidden');
-
+    imageUploadOverlayElement.classList.add('hidden');
     imageUploadFormElement.reset();
-    uploadCancelButton.removeEventListener('click', onCloseUploadOverlayPopup);
+    uploadCancelButtonElement.removeEventListener('click', onCloseUploadOverlayPopup);
     document.removeEventListener('keydown', onPopupEscPress);
-    uploadFileButton.addEventListener('change', onOpenUploadOverlayPopup);
-    effectLevelPin.addEventListener('mousedown', window.slider.onDialogMousedownDrag);
-    // imageUploadFormElement.removeEventListener('keydown', onStopPropagation);
-    imgUploadPreview.removeEventListener('click', onStopPropagation);
+    uploadFileButtonElement.addEventListener('change', onOpenUploadOverlayPopup);
+    effectLevelPinElement.addEventListener('mousedown', window.slider.onDialogMousedownDrag);
+    imageUploadFormElement.removeEventListener('keydown', onStopPropagation);
+    imgUploadPreviewElement.removeEventListener('click', onStopPropagation);
     imageUploadFormElement.removeEventListener('submit', onFormSend);
     window.uploadPictureForm.pinDefaultPosition();
     window.uploadPictureForm.removeEffectClass();
-    imageFiltersForm.addEventListener('click', window.minPictures.onFilterActive);
-    imageFiltersForm.addEventListener('click', window.minPictures.onFilterChange);
+    imageFiltersFormElement.addEventListener('click', window.minPictures.onFilterActive);
+    imageFiltersFormElement.addEventListener('click', window.minPictures.onFilterChange);
     uploadScaleElement.removeEventListener('click', window.uploadPictureForm.onUploadScale);
-
+    imageUploadButtonElement.addEventListener('change', onUploadImage);
     bodyElement.classList.remove('modal-open');
   };
 
-  uploadFileButton.addEventListener('change', onOpenUploadOverlayPopup);
+  imageUploadButtonElement.addEventListener('change', onUploadImage);
+  uploadFileButtonElement.addEventListener('change', onOpenUploadOverlayPopup);
 
   window.uploadPictureDialog = {
     onCloseUploadOverlayPopup: onCloseUploadOverlayPopup,

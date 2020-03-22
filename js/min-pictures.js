@@ -5,7 +5,7 @@
   var pictureItemElement = document.querySelector('#picture').content.querySelector('.picture');
   var picturesInlineListElement = document.querySelector('.pictures');
   var imageFiltersElement = document.querySelector('.img-filters');
-  var imageFiltersForm = imageFiltersElement.querySelector('.img-filters__form');
+  var imageFiltersFormElement = imageFiltersElement.querySelector('.img-filters__form');
   var pictureList = [];
   var pictureListCopy = [];
 
@@ -86,8 +86,8 @@
     evt.target.classList.add('img-filters__button--active');
   };
 
-  imageFiltersForm.addEventListener('click', onFilterActive);
-  imageFiltersForm.addEventListener('click', onFilterChange);
+  imageFiltersFormElement.addEventListener('click', onFilterActive);
+  imageFiltersFormElement.addEventListener('click', onFilterChange);
 
   window.backend.load(getMinPictures, window.backend.renderError);
 

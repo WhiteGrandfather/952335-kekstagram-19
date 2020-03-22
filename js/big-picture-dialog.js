@@ -6,8 +6,8 @@
   var picturesInlineListElement = document.querySelector('.pictures');
   var bigPictureCloseButton = bigPictureElement.querySelector('.big-picture__cancel');
   var imageFiltersElement = document.querySelector('.img-filters');
-  var imageFiltersForm = imageFiltersElement.querySelector('.img-filters__form');
-  var commentsLoader = bigPictureElement.querySelector('.comments-loader');
+  var imageFiltersFormElement = imageFiltersElement.querySelector('.img-filters__form');
+  var commentsLoaderElement = bigPictureElement.querySelector('.comments-loader');
 
   var onBigPicturePopupEscPress = function (evt) {
     window.util.getEscEvent(evt, onCloseBigPictureOverlayPopup);
@@ -25,8 +25,8 @@
     picturesInlineListElement.removeEventListener('click', onBigPicturePopup);
     document.addEventListener('keydown', onBigPicturePopupEscPress);
     bigPictureCloseButton.addEventListener('click', onCloseBigPictureOverlayPopup);
-    imageFiltersForm.removeEventListener('click', window.minPictures.onFilterActive);
-    imageFiltersForm.removeEventListener('click', window.minPictures.onFilterChange);
+    imageFiltersFormElement.removeEventListener('click', window.minPictures.onFilterActive);
+    imageFiltersFormElement.removeEventListener('click', window.minPictures.onFilterChange);
   };
 
   var onCloseBigPictureOverlayPopup = function () {
@@ -34,9 +34,9 @@
     picturesInlineListElement.addEventListener('click', onBigPicturePopup);
     document.removeEventListener('keydown', onBigPicturePopupEscPress);
     bigPictureCloseButton.removeEventListener('click', onCloseBigPictureOverlayPopup);
-    imageFiltersForm.addEventListener('click', window.minPictures.onFilterActive);
-    imageFiltersForm.addEventListener('click', window.minPictures.onFilterChange);
-    commentsLoader.removeEventListener('cilck', window.bigPicture.onCommentsLoader);
+    imageFiltersFormElement.addEventListener('click', window.minPictures.onFilterActive);
+    imageFiltersFormElement.addEventListener('click', window.minPictures.onFilterChange);
+    commentsLoaderElement.removeEventListener('cilck', window.bigPicture.onCommentsLoader);
   };
 
   picturesInlineListElement.addEventListener('click', onBigPicturePopup);
