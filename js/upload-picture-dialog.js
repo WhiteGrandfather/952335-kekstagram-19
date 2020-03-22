@@ -66,4 +66,8 @@
   };
 
   uploadFileButton.addEventListener('change', onOpenUploadOverlayPopup);
+
+  window.uploadPictureDialog = {
+    onCloseUploadOverlayPopup: onCloseUploadOverlayPopup
+  };
 })();

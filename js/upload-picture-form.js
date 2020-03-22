@@ -80,6 +80,40 @@
   var validateHashtags = function () {
     var hashtags = textHashtagsElement.value.trim().toLowerCase().split(/\s+/);
 
+    // for (var i = 0; i < hashtags.length; i++) {
+    //   if (hashtags[i] === '#') {
+    //     textHashtagsElement.setCustomValidity('Хеш-тег не может состоят только из решетки.');
+    //     return false;
+    //   } else if (hashtags[i][0] !== '#') {
+    //     textHashtagsElement.setCustomValidity('Каждый хеш-тег начинается с решетки "#".');
+    //     return false;
+    //   } else if (!(/^[#][a-zа-яё0-9]+$/.test(hashtags[i]))) {
+    //     textHashtagsElement.setCustomValidity('Хеш-тег состоит из букв и цифр.');
+    //     return false;
+    //   } else if (hashtags[i].length > HASHTAG_MAX_LENGTH) {
+    //     textHashtagsElement.setCustomValidity('Хеш-тег не может быть длинее 20 символов.');
+    //     return false;
+    //   } else {
+    //     textHashtagsElement.setCustomValidity('');
+    //   }
+    //   for (var x = i + 1; x < hashtags.length; x++) {
+    //     if (hashtags.length !== 1 && hashtags[i] === hashtags[x]) {
+    //       textHashtagsElement.setCustomValidity('Не может быть повторяющихся хеш-тегов. Хэш-теги нечувствительны к регистру: #ХэшТег и #хэштег считаются одним и тем же тегом.');
+    //       return false;
+    //     } else {
+    //       textHashtagsElement.setCustomValidity('');
+    //     }
+    //   }
+    // }
+    // if (hashtags.length > HASHTAG_MAX_COUNT) {
+    //   textHashtagsElement.setCustomValidity('Максимальное количество хеш-тегов ' + HASHTAG_MAX_COUNT + '.');
+    //   return false;
+    // } else {
+    //   textHashtagsElement.setCustomValidity('');
+    // }
+
+    // return true;
+
     for (var j = 0; j < hashtags.length; j++) {
       if (hashtags[j] === '#') {
         textHashtagsElement.setCustomValidity('Хеш-тег не может состоят только из решетки.');
@@ -162,4 +196,3 @@
     removeEffectClass: removeEffectClass
   };
 })();
-

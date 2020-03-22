@@ -53,8 +53,8 @@
     renderMinPictures(pictures);
   };
 
-  var getSortByLikes = function (first, second) {
-    return first.likes - second.likes;
+  var getSortByComments = function (first, second) {
+    return second.comments.length - first.comments.length;
   };
 
   var getFilterChange = function () {
@@ -66,10 +66,10 @@
         rerenderPictures(pictureListOriginal);
         break;
       case 'filter-random':
-        rerenderPictures(window.util.sortRandom(pictureListCopy));
+        rerenderPictures(window.util.sortRandom(pictureListCopy).slice(0, 10));
         break;
       case 'filter-discussed':
-        rerenderPictures(pictureListCopy.sort(getSortByLikes));
+        rerenderPictures(pictureListCopy.sort(getSortByComments));
         break;
       default:
         throw new Error('неожиданный ID кнопки фильтра "' + activeFilterElement.id + '"');

@@ -973,6 +973,10 @@ main {
         align-items: center;
 }
 
+.social__comment.hidden {
+  display: none;
+}
+
 .social__comment-count {
   padding-top: 20px;
   padding-left: 65px;

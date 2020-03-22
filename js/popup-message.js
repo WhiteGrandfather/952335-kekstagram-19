@@ -52,7 +52,7 @@
     document.addEventListener('keydown', onErrorEscMessageClose);
     mainElement.querySelector('.error').addEventListener('click', onCloseErrorMessage);
     mainElement.querySelector('.error__button').addEventListener('click', onCloseErrorMessage);
-    window.uploadPictureDialog();
+    window.uploadPictureDialog.onCloseUploadOverlayPopup();
     if (mainElement.querySelector('.success')) {
       mainElement.querySelector('.success').remove();
     }
